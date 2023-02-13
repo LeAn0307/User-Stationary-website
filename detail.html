@@ -194,28 +194,7 @@
     <div class="container-fluid pb-5">
         <div class="row px-xl-5">
             <div class="col-lg-5 mb-30">
-                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner bg-light">
-                        <div class="carousel-item active">
-                            <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-3.jpg" alt="Image">
-                        </div>
-                        <div class="carousel-item">
-                            <img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
-                        </div>
-                    </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
-                </div>
+                <img class="w-100 h-100" id="imageproduct" alt="Image">
             </div>
 
             <div class="col-lg-7 h-auto mb-30">
@@ -545,6 +524,7 @@
     <script src="js/main.js"></script>
 <script>
     let baseURL ="http://127.0.0.1:8080";
+    let productid=14;
     // fetch(baseURL+'/products/14')
     //     .then(response => response.json())
     //     .then(data => {
@@ -563,16 +543,17 @@
         //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
     });
           $.ajax({
-              url: baseURL+'/products/14',
+              url: baseURL+'/products/'+productid,
                 type: 'get',
         dataType: "json",
                  contentType : "application/json",
                 success: function(data) {
 
-                    document.getElementById('productName').innerHTML = JSON.stringify(data["name"]);
+                    document.getElementById('productName').innerHTML =(data["name"]);
                     document.getElementById('description').innerHTML = (data["description"].replace(/\n/g, "\n"));
                     document.getElementById('price').innerHTML = (formatter .format(data["price"]));
                     document.getElementById('color').innerHTML =  (data["color"]);
+                    document.getElementById('imageproduct').setAttribute("src", baseURL+"/images/product/"+data["image"]);
                  },
                  error: function(data) {
 
@@ -619,6 +600,7 @@
 
             })
             document.getElementById("reviews").innerHTML=listreview;
+
             document.getElementById("sum").innerHTML='('+data.length + ' reviews'+')';
         },
         error: function(data) {
